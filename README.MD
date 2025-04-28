@@ -63,11 +63,12 @@ Projeto desenvolvido para a disciplina Projeto I - DIM0116
 Professor: Valdigleis S. Costa
 Universidade: Universidade Federal do Rio Grande do Norte
 ---
-#### 🎯 Status:
-✅ CRUD completo
-✅ Persistência
-✅ Organização em camadas (MVC simples)
-✅ Documentação gerada via Javadoc
-📜 Licença
+### 🎯 Status:
+- ✅ CRUD completo
+- ✅ Persistência
+- ✅ Organização em camadas (MVC simples)
+- ✅ Documentação gerada via Javadoc
+
+###📜 Licença
 
 Este projeto é acadêmico e de uso educacional.
