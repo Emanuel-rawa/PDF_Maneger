@@ -1,68 +1,69 @@
-📚 PDF Library Manager
+# 📚 PDF Library Manager
 
 Gerenciador de arquivos PDF em linha de comando, desenvolvido em Java, com estrutura de Programação Orientada a Objetos (POO).
 🛠 Funcionalidades
 
-    📂 Criação de bibliotecas de PDFs organizadas por autor.
+- 📂 Criação de bibliotecas de PDFs organizadas por autor.
 
-    ➕ Adicionar novas entradas (Livro, Notas de Aula, Slide).
+- ➕ Adicionar novas entradas (Livro, Notas de Aula, Slide).
 
-    🔎 Buscar entradas pelo título.
+- 🔎 Buscar entradas pelo título.
 
-    ✏️ Editar entradas (título e autores).
+- ✏️ Editar entradas (título e autores).
 
-    ❌ Deletar entradas da biblioteca.
+- ❌ Deletar entradas da biblioteca.
 
-    📥 Cópia automática dos arquivos PDF para a pasta do autor.
+- 📥 Cópia automática dos arquivos PDF para a pasta do autor.
 
-    🗃️ Persistência do caminho da biblioteca entre execuções.
+- 🗃️ Persistência do caminho da biblioteca entre execuções.
+---
+### 📦 Estrutura de diretórios
+```
+    PDFLibraryManager/
+    ├── src/
+    │   ├── model/
+    │   ├── service/
+    │   ├── persistence/
+    │   ├── view/
+    │   └── Main.java
+    ├── biblioteca_path.txt
+    ├── README.md
+    └── doc/ (gerado pelo Javadoc)
+```
+---
+### 🚀 Como executar
 
-📦 Estrutura de diretórios
+Compile o projeto:
 
-PDFLibraryManager/
-├── src/
-│   ├── model/
-│   ├── service/
-│   ├── persistence/
-│   ├── view/
-│   └── Main.java
-├── biblioteca_path.txt
-├── README.md
-└── doc/ (gerado pelo Javadoc)
+    javac -d bin src/**/*.java
 
-🚀 Como executar
+Execute o projeto:
 
-    Compile o projeto:
+    java -cp bin Main
+---
+### 🖋️ Documentação
 
-javac -d bin src/**/*.java
+A documentação Javadoc está disponível no diretório doc/.
 
-    Execute o projeto:
+Para gerar novamente:
 
-java -cp bin Main
+    javadoc -d doc src/**/*.java
+---
+### 👨‍💻 Tecnologias utilizadas
 
-🖋️ Documentação
+- Java 17+
 
-    A documentação Javadoc está disponível no diretório doc/.
+- Programação Orientada a Objetos
 
-    Para gerar novamente:
-
-javadoc -d doc src/**/*.java
-
-👨‍💻 Tecnologias utilizadas
-
-    Java 17+
-
-    Programação Orientada a Objetos
-
-    Javadoc
-
-📅 Projeto acadêmico
+- Javadoc
+---
+### 📅 Projeto acadêmico
 
 Projeto desenvolvido para a disciplina Projeto I - DIM0116
 Professor: Valdigleis S. Costa
-Universidade: (preencha aqui se quiser)
-🎯 Status
-
+Universidade: Universidade Federal do Rio Grande do Norte
+---
+#### 🎯 Status:
 ✅ CRUD completo
 ✅ Persistência
 ✅ Organização em camadas (MVC simples)
