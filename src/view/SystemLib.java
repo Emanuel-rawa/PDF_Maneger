@@ -13,10 +13,23 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.Scanner;
 
+/**
+ * Sistema de gerenciamento de uma biblioteca de arquivos PDF.
+ * 
+ * Permite adicionar, listar, buscar, editar e deletar entradas organizadas por
+ * autor.
+ *
+ * Dá para adcionar alguns alias para facilitar a navegação do sistema e fazer
+ * uma interface mais bonitinha.
+ */
 public class SystemLib {
   private Lib lib;
   private Scanner scanner = new Scanner(System.in);
 
+  /**
+   * Inicia o sistema carregando o caminho da biblioteca "persistence",
+   * ou criando uma nova se necessário
+   */
   public void start() {
     try {
       String path = Persistence.loadPath();
@@ -33,6 +46,9 @@ public class SystemLib {
     }
   }
 
+  /**
+   * Exibe o menu principal, as opções do CRUD vão aparecer aqui.
+   */
   private void menu() {
     int choice;
     do {
@@ -58,6 +74,9 @@ public class SystemLib {
     } while (choice != 0);
   }
 
+  /**
+   * Adiciona nova entrada (Livro, Anotação ou Slide) na biblioteca.
+   */
   private void addInput() {
     System.out.println("\nEnter the type of entry (Book, Note, Slide): ");
     String type = scanner.nextLine();
@@ -122,6 +141,15 @@ public class SystemLib {
     }
   }
 
+  /**
+   * Copia o arquivo PDF original informado para um diretor do autor na
+   * biblioteca.
+   * 
+   * @param originPath Caminho original do arquivo.
+   * @param authors    Nome dos autores separados por vírgula.
+   * @return Novo caminho do arquivo dentro da biblioteca.
+   * @throws IOException Se ocorrer erro na cópia do arquivo.
+   */
   private String copyToLib(String originPath, String authors) throws IOException {
     File original_file = new File(originPath);
     if (!original_file.exists()) {
@@ -143,6 +171,9 @@ public class SystemLib {
     return destination.toString();
   }
 
+  /**
+   * Busca e exibe entradas que tenham título (atributo mínimo).
+   */
   private void searchInput() {
     System.out.print("Enter the title to search: ");
     String search = scanner.nextLine().toLowerCase();
@@ -160,6 +191,9 @@ public class SystemLib {
     }
   }
 
+  /**
+   * Edita o nome e os autores de uma entrada.
+   */
   private void editFile() {
     System.out.print("Enter the title of the entry you want to edit: ");
     String search = scanner.nextLine().toLowerCase();
@@ -185,6 +219,10 @@ public class SystemLib {
     System.out.println("Error: Can't find entry");
   }
 
+  /**
+   * Deleta uma entrada existente, baseado no título dela.
+   */
+
   private void deleteFile() {
     System.out.print("Enter the title of the entry you want to delete: ");
     String search = scanner.nextLine().toLowerCase();
@@ -205,6 +243,9 @@ public class SystemLib {
     }
   }
 
+  /**
+   * Lista as entradas cadastradas.
+   */
   private void listInputs() {
     if (lib.findedLists().isEmpty()) {
       System.out.println("Empty dir");

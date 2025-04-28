@@ -1,10 +1,21 @@
 package model;
 
+/**
+ * Classe abstrata que representa uma entrada genérica na biblioteca de PDFs.
+ * Contém informações comuns a livros, notas de aula e slides.
+ */
 public abstract class InputLib {
   protected String authors;
   protected String title;
   protected String path_file;
 
+  /**
+   * Construtor da entrada da biblioteca.
+   * 
+   * @param authors   Nomes dos autores.
+   * @param title     Título do documento.
+   * @param path_file Caminho do arquivo PDF na biblioteca.
+   */
   public InputLib(String authors, String title, String path_file) {
     this.authors = authors;
     this.title = title;
@@ -35,6 +46,11 @@ public abstract class InputLib {
     this.path_file = path_file;
   }
 
+  /**
+   * Retorna o tipo da entrada (Livro, Nota de Aula ou Slide).
+   * 
+   * @return Tipo da entrada.
+   */
   public abstract String getType();
 
   @Override
