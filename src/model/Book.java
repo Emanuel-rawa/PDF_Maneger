@@ -32,6 +32,14 @@ public class Book extends InputLib {
     this.num_of_pages = num_of_pages;
   }
 
+  public int getYearPublish() {
+    return year_publish;
+  }
+
+  public String getPublisher() {
+    return publisher;
+  }
+
   @Override
   public String getType() {
     return "Book";

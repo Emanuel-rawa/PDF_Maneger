@@ -3,6 +3,7 @@ package view;
 import model.*;
 import persistence.Persistence;
 import service.Lib;
+import service.CollectionService;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -13,23 +14,11 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.Scanner;
 
-/**
- * Sistema de gerenciamento de uma biblioteca de arquivos PDF.
- * 
- * Permite adicionar, listar, buscar, editar e deletar entradas organizadas por
- * autor.
- *
- * Dá para adcionar alguns alias para facilitar a navegação do sistema e fazer
- * uma interface mais bonitinha.
- */
 public class SystemLib {
   private Lib lib;
   private Scanner scanner = new Scanner(System.in);
+  private CollectionService collectionService = new CollectionService();
 
-  /**
-   * Inicia o sistema carregando o caminho da biblioteca "persistence",
-   * ou criando uma nova se necessário
-   */
   public void start() {
     try {
       String path = Persistence.loadPath();
@@ -46,9 +35,6 @@ public class SystemLib {
     }
   }
 
-  /**
-   * Exibe o menu principal, as opções do CRUD vão aparecer aqui.
-   */
   private void menu() {
     int choice;
     do {
@@ -58,6 +44,7 @@ public class SystemLib {
       System.out.println("3. Search file");
       System.out.println("4. Edit file");
       System.out.println("5. Delete file");
+      System.out.println("6. Collections menu");
       System.out.println("0. exit");
       System.out.print("Choice: ");
       choice = Integer.parseInt(scanner.nextLine());
@@ -68,13 +55,135 @@ public class SystemLib {
         case 3 -> searchInput();
         case 4 -> editFile();
         case 5 -> deleteFile();
+        case 6 -> collectionsMenu();
         case 0 -> System.out.println("Saindo...");
         default -> System.out.println("Opção inválida!");
       }
     } while (choice != 0);
   }
 
-  /**
+  private void collectionsMenu() {
+    int choice;
+    do {
+      System.out.println("\n=== Collections Menu ===");
+      System.out.println("1. Create collection");
+      System.out.println("2. Add entry to collection");
+      System.out.println("3. Remove entry from collection");
+      System.out.println("4. Generate BibTeX (.bib)");
+      System.out.println("5. Generate ZIP (.zip)");
+      System.out.println("6. List all collections");
+      System.out.println("0. Back to main menu");
+      System.out.print("Choice: ");
+      choice = Integer.parseInt(scanner.nextLine());
+
+      switch (choice) {
+        case 1 -> createCollection();
+        case 2 -> addToCollection();
+        case 3 -> removeFromCollection();
+        case 4 -> generateBib();
+        case 5 -> generateZip();
+        case 6 -> listCollections();
+        case 0 -> System.out.println("Returning...");
+        default -> System.out.println("Invalid option!");
+      }
+    } while (choice != 0);
+  }
+
+  private void createCollection() {
+    System.out.print("Collection name: ");
+    String name = scanner.nextLine();
+    System.out.print("Author name: ");
+    String author = scanner.nextLine();
+    System.out.print("Max size: ");
+    int max = Integer.parseInt(scanner.nextLine());
+    System.out.print("Type (Book, Notes, Slide): ");
+    String type = scanner.nextLine().toLowerCase();
+
+    Class<? extends InputLib> clazz = switch (type) {
+      case "book" -> Book.class;
+      case "notes" -> Notes.class;
+      case "slide" -> Slide.class;
+      default -> null;
+    };
+
+    if (clazz == null) {
+      System.out.println("Invalid type.");
+      return;
+    }
+    collectionService.createCollection(name, author, max, clazz);
+    System.out.println("Collection created.");
+  }
+
+  private void addToCollection() {
+    System.out.print("Collection name: ");
+    String name = scanner.nextLine();
+    System.out.print("Title of entry to add: ");
+    String title = scanner.nextLine().toLowerCase();
+
+    for (InputLib entry : lib.findedLists()) {
+      if (entry.getTitle().toLowerCase().contains(title)) {
+        boolean ok = collectionService.addEntryToCollection(name, entry);
+        System.out.println(ok ? "Entry added." : "Failed to add entry.");
+        return;
+      }
+    }
+    System.out.println("Entry not found.");
+  }
+
+  private void removeFromCollection() {
+    System.out.print("Collection name: ");
+    String name = scanner.nextLine();
+    System.out.print("Title of entry to remove: ");
+    String title = scanner.nextLine().toLowerCase();
+
+    for (InputLib entry : lib.findedLists()) {
+      if (entry.getTitle().toLowerCase().contains(title)) {
+        boolean ok = collectionService.removeEntryFromCollection(name, entry);
+        System.out.println(ok ? "Entry removed." : "Failed to remove.");
+        return;
+      }
+    }
+    System.out.println("Entry not found.");
+  }
+
+  private void generateBib() {
+    System.out.print("Collection name: ");
+    String name = scanner.nextLine();
+    System.out.print("Output path (e.g., refs.bib): ");
+    String path = scanner.nextLine();
+
+    try {
+      collectionService.generateBibTex(name, path);
+      System.out.println(".bib generated.");
+    } catch (IOException e) {
+      System.out.println("Error: " + e.getMessage());
+    }
+  }
+
+  private void generateZip() {
+    System.out.print("Collection name: ");
+    String name = scanner.nextLine();
+    System.out.print("Output path (e.g., arquivos.zip): ");
+    String path = scanner.nextLine();
+
+    try {
+      collectionService.zipCollection(name, path);
+      System.out.println(".zip created.");
+    } catch (IOException e) {
+      System.out.println("Error: " + e.getMessage());
+    }
+  }
+
+  private void listCollections() {
+    var all = collectionService.listAll();
+    if (all.isEmpty()) {
+      System.out.println("No collections.");
+      return;
+    }
+    for (var c : all) {
+      System.out.println(c);
+    }
+  }  /**
    * Adiciona nova entrada (Livro, Anotação ou Slide) na biblioteca.
    */
   private void addInput() {

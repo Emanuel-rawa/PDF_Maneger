@@ -1,22 +1,20 @@
 # 📚 PDF Library Manager
 
-Gerenciador de arquivos PDF em linha de comando, desenvolvido em Java, com estrutura de Programação Orientada a Objetos (POO).
-🛠 Funcionalidades
+Sistema de linha de comando em Java para gerenciar uma biblioteca de arquivos PDF (livros, anotações e slides).
 
-- 📂 Criação de bibliotecas de PDFs organizadas por autor.
+## 🚀 Funcionalidades
 
-- ➕ Adicionar novas entradas (Livro, Notas de Aula, Slide).
+- ✅ Cadastro de entradas (Book, Notes, Slide)
+- 📂 Organização por autor
+- 🔍 Busca, edição e exclusão de arquivos
+- 🗃️ Sistema de coleções:
+  - Criação de coleções por tipo e autor
+  - Adição e remoção de entradas
+  - Exportação `.bib` (BibTeX) para coleções de livros
+  - Compactação `.zip` com os PDFs da coleção
+- 💾 Persistência do caminho da biblioteca
 
-- 🔎 Buscar entradas pelo título.
-
-- ✏️ Editar entradas (título e autores).
-
-- ❌ Deletar entradas da biblioteca.
-
-- 📥 Cópia automática dos arquivos PDF para a pasta do autor.
-
-- 🗃️ Persistência do caminho da biblioteca entre execuções.
----
+## 📦 Estrutura---
 ### 📦 Estrutura de diretórios
 ```
     PDFLibraryManager/
